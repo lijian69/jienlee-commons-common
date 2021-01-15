@@ -20,23 +20,10 @@ public class RedisProperties {
     private String password;
     private int database = 0;
 
-
-    private String timeout = "10000";
-
     private int maxActive = 8;
     private int maxIdle = 8;
     private int maxWait = -1;
     private int minIdle = 0;
-
-    private Config config;
-
-    @Data
-    public class Config {
-        private int timeout = 10000;
-        private int maxTotal = 8;
-        private int maxIdle = 8;
-        private int maxWaitMillis = -1;
-    }
 
 }
 

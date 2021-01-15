@@ -1,5 +1,6 @@
 package com.teach.core.redis;
 
+import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -39,8 +40,18 @@ public class RedisUtil implements ApplicationContextAware {
      * @return
      */
     public static <T> T get(final String groupKey, final Object key, final Class<T> clazz) {
-        Object o = redisTemplate.opsForValue().get(getKey(groupKey, key));
-        return clazz.cast(o);
+        String value =(String) redisTemplate.opsForValue().get(getKey(groupKey, key));
+        return toBean(value, clazz);
+    }
+
+    public static <T> T toBean(String value, Class<T> tClass) {
+        T t = null;
+        try {
+            t = JSON.parseObject(value, tClass);
+        } catch (Exception exception) {
+            logger.error("value:{} toBean error!", value);
+        }
+        return t;
     }
 
     /**
@@ -50,10 +61,10 @@ public class RedisUtil implements ApplicationContextAware {
      * @param time
      * @return
      */
-    public static boolean expire(String groupKey, String key, long time) {
+    public static boolean expire(String groupKey, String key, long time, TimeUnit timeUnit) {
         try {
             if (time > 0) {
-                redisTemplate.expire(getKey(groupKey, key), time, TimeUnit.SECONDS);
+                redisTemplate.expire(getKey(groupKey, key), time, timeUnit);
             }
             return true;
         }catch (Exception e) {
@@ -69,8 +80,8 @@ public class RedisUtil implements ApplicationContextAware {
      * @param key 键 不能为null
      * @return 时间(秒) 返回0代表为永久有效
      */
-    public static long getExpire(String groupKey, String key) {
-        return redisTemplate.getExpire(getKey(groupKey, key), TimeUnit.SECONDS);
+    public static long getExpire(String groupKey, String key, TimeUnit timeUnit) {
+        return redisTemplate.getExpire(getKey(groupKey, key), timeUnit);
     }
 
     /**
@@ -110,30 +121,18 @@ public class RedisUtil implements ApplicationContextAware {
     // ============================String=============================
 
     /**
-     * 普通缓存获取
-     * @param key 键
-     * @return 值
-     */
-    public static Object get(String groupKey, String key) {
-        return key == null ? null : redisTemplate.opsForValue().get(key);
-    }
-
-    /**
      * 普通缓存放入
      *
      * @param key   键
      * @param value 值
      * @return true成功 false失败
      */
-    public static boolean set(String groupKey, String key, String value) {
+    public static void set(String groupKey, String key, Object value) {
         try {
-            redisTemplate.opsForValue().set(getKey(groupKey, key), value);
-            return true;
+            redisTemplate.opsForValue().set(getKey(groupKey, key), JSON.toJSONString(value));
         } catch (Exception e) {
             logger.error("RedisUtil.setValue failed. groupKey:{} key:{}", groupKey, key, e);
-            return false;
         }
-
     }
 
     /**
@@ -144,17 +143,15 @@ public class RedisUtil implements ApplicationContextAware {
      * @param time  时间(秒) time要大于0 如果time小于等于0 将设置无限期
      * @return true成功 false 失败
      */
-    public static boolean setAndExpire(String groupKey, String key, String value, long time) {
+    public static void setAndExpire(String groupKey, String key, Object value, long time, TimeUnit timeUnit) {
         try {
             if (time > 0) {
-                redisTemplate.opsForValue().set(getKey(groupKey, key), value, time, TimeUnit.SECONDS);
+                redisTemplate.opsForValue().set(getKey(groupKey, key), JSON.toJSONString(value), time, timeUnit);
             } else {
                 set(groupKey, key, value);
             }
-            return true;
         } catch (Exception e) {
             logger.error("RedisUtil.setValueAndExpire failed. groupKey:{} key:{}", groupKey, key, e);
-            return false;
         }
     }
 
@@ -231,11 +228,11 @@ public class RedisUtil implements ApplicationContextAware {
      * @param time 时间(秒)
      * @return true成功 false失败
      */
-    public static boolean hmsetAndExpire(String groupKey, String key, Map<String, Object> map, long time) {
+    public static boolean hmsetAndExpire(String groupKey, String key, Map<String, Object> map, long time, TimeUnit timeUnit) {
         try {
             redisTemplate.opsForHash().putAll(getKey(groupKey, key), map);
             if (time > 0) {
-                expire(groupKey, key, time);
+                expire(groupKey, key, time, timeUnit);
             }
             return true;
         } catch (Exception e) {
@@ -271,11 +268,11 @@ public class RedisUtil implements ApplicationContextAware {
      * @param time  时间(秒) 注意:如果已存在的hash表有时间,这里将会替换原有的时间
      * @return true 成功 false失败
      */
-    public static boolean hset(String groupKey, String key, String item, Object value, long time) {
+    public static boolean hset(String groupKey, String key, String item, Object value, long time, TimeUnit timeUnit) {
         try {
             redisTemplate.opsForHash().put(getKey(groupKey, key), item, value);
             if (time > 0) {
-                expire(groupKey, key, time);
+                expire(groupKey, key, time, timeUnit);
             }
             return true;
         } catch (Exception e) {
@@ -384,11 +381,11 @@ public class RedisUtil implements ApplicationContextAware {
      * @param values 值 可以是多个
      * @return 成功个数
      */
-    public static long sSetAndTime(String groupKey, String key, long time, String... values) {
+    public static long sSetAndTime(String groupKey, String key, long time, TimeUnit timeUnit, String... values) {
         try {
             Long count = redisTemplate.opsForSet().add(getKey(groupKey, key), values);
             if (time > 0){
-                expire(groupKey, key, time);
+                expire(groupKey, key, time, timeUnit);
             }
             return count;
         } catch (Exception e) {
@@ -485,9 +482,9 @@ public class RedisUtil implements ApplicationContextAware {
      * @param value 值
      * @return
      */
-    public static boolean lSet(String groupKey, String key, String value) {
+    public static boolean lSet(String groupKey, String key, Object value) {
         try {
-            redisTemplate.opsForList().rightPush(getKey(groupKey, key), value);
+            redisTemplate.opsForList().rightPush(getKey(groupKey, key), JSON.toJSONString(value));
             return true;
         } catch (Exception e) {
             logger.error("RedisUtil.lSet failed. groupKey:{} key:{}", groupKey, key, e);
@@ -503,11 +500,11 @@ public class RedisUtil implements ApplicationContextAware {
      * @param time  时间(秒)
      * @return
      */
-    public static boolean lSet(String groupKey, String key, String value, long time) {
+    public static boolean lSet(String groupKey, String key, Object value, long time, TimeUnit timeUnit) {
         try {
-            redisTemplate.opsForList().rightPush(getKey(groupKey, key), value);
+            redisTemplate.opsForList().rightPush(getKey(groupKey, key), JSON.toJSONString(value));
             if (time > 0){
-                expire(groupKey, key, time);
+                expire(groupKey, key, time, timeUnit);
             }
             return true;
         } catch (Exception e) {
@@ -541,11 +538,11 @@ public class RedisUtil implements ApplicationContextAware {
      * @param time  时间(秒)
      * @return
      */
-    public static boolean lSet(String groupKey, String key, List<String> value, long time) {
+    public static boolean lSet(String groupKey, String key, List<String> value, long time, TimeUnit timeUnit) {
         try {
             redisTemplate.opsForList().rightPushAll(getKey(groupKey, key), value);
             if (time > 0){
-                expire(groupKey, key, time);
+                expire(groupKey, key, time, timeUnit);
             }
             return true;
         } catch (Exception e) {
@@ -562,9 +559,9 @@ public class RedisUtil implements ApplicationContextAware {
      * @param value 值
      * @return
      */
-    public static boolean lUpdateIndex(String groupKey, String key, long index, String value) {
+    public static boolean lUpdateIndex(String groupKey, String key, long index, Object value) {
         try {
-            redisTemplate.opsForList().set(getKey(groupKey, key), index, value);
+            redisTemplate.opsForList().set(getKey(groupKey, key), index, JSON.toJSONString(value));
             return true;
         } catch (Exception e) {
             logger.error("RedisUtil.lUpdateIndex failed. groupKey:{} key:{}", groupKey, key, e);
