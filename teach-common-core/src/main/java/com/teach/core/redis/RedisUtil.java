@@ -27,7 +27,7 @@ public class RedisUtil implements ApplicationContextAware {
     private static StringRedisTemplate redisTemplate;
 
     public static String getKey(String groupKey, Object key) {
-        return String.format("%s%s", groupKey, key);
+        return String.format("%s:%s", groupKey, key);
     }
 
     /**
