@@ -1,5 +1,6 @@
 package com.teach.core.exception;
 
+import com.teach.core.enums.IBaseResultCode;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,14 +9,22 @@ import lombok.NoArgsConstructor;
  * @author lijian
  */
 @Data
-@NoArgsConstructor
 public class BusinessException extends RuntimeException {
 
     private Integer code;
-    private String msg;
+    private String message;
 
-    public BusinessException(Integer code, String msg) {
+    public BusinessException() {
+    }
+
+    public BusinessException(Integer code, String message) {
+        super(message);
         this.code = code;
-        this.msg = msg;
+    }
+
+    public static BusinessException of(IBaseResultCode baseResultCode) {
+        BusinessException businessException = new BusinessException(baseResultCode.getCode(),
+                baseResultCode.getMessage());
+        return businessException;
     }
 }
