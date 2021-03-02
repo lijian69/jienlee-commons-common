@@ -22,6 +22,9 @@ import java.util.List;
 
 import static com.rocketmq.starter.properties.RocketMqProperties.PREFIX;
 
+/**
+ * @author jien.lee
+ */
 @Configuration
 @EnableConfigurationProperties(RocketMqProperties.class)
 @ConditionalOnProperty(prefix = PREFIX, value = "namesrvAddr")

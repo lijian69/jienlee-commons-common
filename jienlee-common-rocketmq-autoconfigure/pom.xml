@@ -3,16 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>teach-commons-common</artifactId>
-        <groupId>com.teach</groupId>
+        <groupId>com.jienlee</groupId>
+        <artifactId>commons-common</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <groupId>com.teach</groupId>
-    <artifactId>teach-common-rocketmq-autoconfigure</artifactId>
-    <version>1.0.0</version>
-    <name>teach-common-rocketmq-autoconfigure</name>
-    <description>rocketmq autoconfigure</description>
+    <artifactId>jienlee-common-rocketmq-autoconfigure</artifactId>
 
     <dependencies>
         <dependency>
@@ -27,19 +23,16 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
+
     </dependencies>
 
     <build>
