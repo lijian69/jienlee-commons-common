@@ -12,6 +12,7 @@
         <module>jienlee-common-core</module>
         <module>jienlee-common-redis-autoconfigure</module>
         <module>jienlee-common-swagger-autoconfigure</module>
+        <module>jienlee-common-mybatis-autoconfigure</module>
     </modules>
 
     <properties>
