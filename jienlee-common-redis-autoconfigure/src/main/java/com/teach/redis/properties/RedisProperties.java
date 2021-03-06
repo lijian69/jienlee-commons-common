@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  **/
 @Data
 @Component
-@ConfigurationProperties(prefix = "teach.redis")
+@ConfigurationProperties(prefix = "jienlee.redis")
 public class RedisProperties {
 
     private String host = "127.0.0.1";

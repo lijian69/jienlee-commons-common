@@ -1,5 +1,6 @@
 package com.teach.core.util;
 
+import com.teach.core.enums.IBaseResultCode;
 import org.springframework.lang.Nullable;
 
 /**
