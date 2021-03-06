@@ -6,7 +6,6 @@ import com.teach.core.ui.Toast;
 import lombok.Data;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 同意的返回类
@@ -14,54 +13,44 @@ import java.util.Map;
  * @author lijian
  */
 @Data
-public class ResultMap {
-
-    private Map<String, Object> map;
-
-    public ResultMap() {
-        this.map = new HashMap<>(8);
-    }
-
-    public ResultMap put(String key, Object value) {
-        map.put(key, value);
-        return this;
-    }
+public class ResultMap extends HashMap<String, Object> {
 
     public ResultMap busy() {
-        map.put("code", SysConstant.SYSTEM_BUSY_CODE);
-        map.put("message", SysConstant.SYSTEM_BUSY_CODE_MSG);
+        put("code", SysConstant.SYSTEM_BUSY_CODE);
+        put("message", SysConstant.SYSTEM_BUSY_CODE_MSG);
         return this;
     }
 
     public ResultMap success() {
-        map.put("code", 0);
+        put("code", 0);
         return this;
     }
 
     public ResultMap success(Object object) {
-        map.put("code", 0);
-        map.put("data", object);
+        put("code", 0);
+        put("data", object);
         return this;
     }
-    public ResultMap paramError(){
-        map.put("code", SysConstant.PARAMETER_ERROR_CODE);
-        map.put("message", SysConstant.PARAMETER_ERROR_MSG);
+
+    public ResultMap paramError() {
+        put("code", SysConstant.PARAMETER_ERROR_CODE);
+        put("message", SysConstant.PARAMETER_ERROR_MSG);
         return this;
     }
 
     public ResultMap failed(Integer code, String message) {
-        map.put("code", code);
-        map.put("message", message);
+        put("code", code);
+        put("message", message);
         return this;
     }
 
     public ResultMap showToast(Toast toast) {
-        map.put("code", 10001);
-        map.put("toast", toast);
+        put("code", 10001);
+        put("toast", toast);
         return this;
     }
 
     public String toJson() {
-        return JSONObject.toJSONString(map);
+        return JSONObject.toJSONString(this);
     }
 }

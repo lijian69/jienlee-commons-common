@@ -6,20 +6,25 @@ import lombok.NoArgsConstructor;
 
 /**
  * 业务异常处理类
- * @author lijian
+ *
+ * @author jien.lee
  */
 @Data
 public class BusinessException extends RuntimeException {
 
-    private Integer code;
+    private Integer code = 500;
     private String message;
-
-    public BusinessException() {
-    }
 
     public BusinessException(Integer code, String message) {
         super(message);
         this.code = code;
+        this.message = message;
+    }
+
+    public BusinessException(Integer code, String message, Throwable throwable) {
+        super(message, throwable);
+        this.code = code;
+        this.message = message;
     }
 
     public static BusinessException of(IBaseResultCode baseResultCode) {

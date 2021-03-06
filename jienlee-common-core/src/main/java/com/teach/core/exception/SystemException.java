@@ -5,17 +5,24 @@ import lombok.NoArgsConstructor;
 
 /**
  * 系统异常处理类
+ *
  * @author lijian
  */
 @Data
-@NoArgsConstructor
 public class SystemException extends RuntimeException {
 
-    private Integer code;
-    private String msg;
+    private Integer code = 500;
+    private String message;
 
-    public SystemException(Integer code, String msg) {
+    public SystemException(Integer code, String message) {
+        super(message);
         this.code = code;
-        this.msg = msg;
+        this.message = message;
+    }
+
+    public SystemException(Integer code, String message, Throwable throwable) {
+        super(message, throwable);
+        this.code = code;
+        this.message = message;
     }
 }
