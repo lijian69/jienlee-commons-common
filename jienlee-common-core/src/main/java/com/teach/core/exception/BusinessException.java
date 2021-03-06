@@ -2,7 +2,6 @@ package com.teach.core.exception;
 
 import com.teach.core.enums.IBaseResultCode;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * 业务异常处理类

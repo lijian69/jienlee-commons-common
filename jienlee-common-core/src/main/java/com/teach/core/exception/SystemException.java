@@ -1,7 +1,6 @@
 package com.teach.core.exception;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * 系统异常处理类

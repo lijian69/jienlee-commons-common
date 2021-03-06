@@ -1,4 +1,4 @@
-package com.teach.core.yaml;
+package com.teach.core.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

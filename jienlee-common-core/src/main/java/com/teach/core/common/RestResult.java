@@ -12,7 +12,7 @@ import org.apache.commons.lang3.math.NumberUtils;
  * @author lijian
  */
 @Data
-public class Result<T> {
+public class RestResult<T> {
 
     private Integer code ;
 
@@ -20,39 +20,39 @@ public class Result<T> {
 
     private T data;
 
-    public Result() {
+    public RestResult() {
     }
 
-    public Result<T> busy() {
+    public RestResult<T> busy() {
         setCode(SysConstant.SYSTEM_BUSY_CODE);
         setMessage(SysConstant.SYSTEM_BUSY_CODE_MSG);
         return this;
     }
 
-    public Result<T> success() {
+    public RestResult<T> success() {
         setCode(NumberUtils.INTEGER_ZERO);
         return this;
     }
 
-    public Result<T> success(T data) {
+    public RestResult<T> success(T data) {
         setCode(NumberUtils.INTEGER_ZERO);
         setData(data);
         return this;
     }
 
-    public Result<T> paramError() {
+    public RestResult<T> paramError() {
         setCode(SysConstant.PARAMETER_ERROR_CODE);
         setMessage(SysConstant.PARAMETER_ERROR_MSG);
         return this;
     }
 
-    public Result<T> failed(Integer code, String message) {
+    public RestResult<T> failed(Integer code, String message) {
         setCode(code);
         setMessage(message);
         return this;
     }
 
-    public Result<T> failed(IBaseResultCode resultCode) {
+    public RestResult<T> failed(IBaseResultCode resultCode) {
         setCode(resultCode.getCode());
         setMessage(resultCode.getMessage());
         return this;
