@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jienlee</groupId>
-    <artifactId>commons-common</artifactId>
+    <artifactId>jienlee.commons-common</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
@@ -12,6 +12,7 @@
         <module>jienlee-common-core</module>
         <module>jienlee-common-redis-autoconfigure</module>
         <module>jienlee-common-swagger-autoconfigure</module>
+        <module>jienlee-common-rocketmq-autoconfigure</module>
         <module>jienlee-common-mybatis-autoconfigure</module>
     </modules>
 
