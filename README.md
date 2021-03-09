@@ -9,7 +9,7 @@ TeachApp公共 jar 包，包括 Redis、MQ，Bean等
 > 该包已经提供自动装载 spring-boot 项目中，直接引入依赖，yml 进行配置即可。
 ```
 <dependency>
-    <groupId>com.jienlee</groupId>
+    <groupId>com.github.lijian69</groupId>
     <artifactId>jienlee-common-redis-autoconfigure</artifactId>
     <version>1.0.0</version>
 </dependency>
@@ -39,7 +39,7 @@ jienlee:
 > 该包已经提供自动装载 spring-boot 项目中，直接引入依赖，yml 进行配置即可。
 ```
 <dependency>
-    <groupId>com.jienlee</groupId>
+    <groupId>com.github.lijian69</groupId>
     <artifactId>jienlee-common-swagger-autoconfigure</artifactId>
     <version>1.0.0</version>
 </dependency>
