@@ -14,12 +14,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-/**
- * @program: teach-commons-common
- * @description:
- * @author: lijian1 ( email: lijian1@didachuxing.com )
- * @create: 2021-01-11 14:50
- **/
 public class RedisUtil implements ApplicationContextAware {
 
     private static Logger logger = LoggerFactory.getLogger(RedisUtil.class);
@@ -33,10 +27,10 @@ public class RedisUtil implements ApplicationContextAware {
     /**
      * 取得clazz类型的对象
      *
-     * @param groupKey
-     * @param key
-     * @param clazz
-     * @param <T>
+     * @param groupKey 组别
+     * @param key key
+     * @param clazz clazz
+     * @param <T> 犯行
      * @return
      */
     public static <T> T get(final String groupKey, final Object key, final Class<T> clazz) {
