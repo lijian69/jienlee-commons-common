@@ -28,13 +28,13 @@ public class RedisUtil implements ApplicationContextAware {
      * 取得clazz类型的对象
      *
      * @param groupKey 组别
-     * @param key key
-     * @param clazz clazz
-     * @param <T> 犯行
+     * @param key      key
+     * @param clazz    clazz
+     * @param <T>      犯行
      * @return
      */
     public static <T> T get(final String groupKey, final Object key, final Class<T> clazz) {
-        String value =(String) redisTemplate.opsForValue().get(getKey(groupKey, key));
+        String value = (String) redisTemplate.opsForValue().get(getKey(groupKey, key));
         return toBean(value, clazz);
     }
 
@@ -50,6 +50,7 @@ public class RedisUtil implements ApplicationContextAware {
 
     /**
      * 指定缓存失效时间
+     *
      * @param groupKey
      * @param key
      * @param time
@@ -61,7 +62,7 @@ public class RedisUtil implements ApplicationContextAware {
                 redisTemplate.expire(getKey(groupKey, key), time, timeUnit);
             }
             return true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             logger.error("RedisUtil.expire failed. groupKey:{} key:{}", groupKey, key, e);
             return false;
         }
@@ -181,6 +182,7 @@ public class RedisUtil implements ApplicationContextAware {
 
     /**
      * HashGet
+     *
      * @param key  键 不能为null
      * @param item 项 不能为null
      * @return 值
@@ -191,6 +193,7 @@ public class RedisUtil implements ApplicationContextAware {
 
     /**
      * 获取hashKey对应的所有键值
+     *
      * @param key 键
      * @return 对应的多个键值
      */
@@ -200,6 +203,7 @@ public class RedisUtil implements ApplicationContextAware {
 
     /**
      * HashSet
+     *
      * @param key 键
      * @param map 对应多个键值
      * @return true 成功 false 失败
@@ -324,6 +328,7 @@ public class RedisUtil implements ApplicationContextAware {
 
     /**
      * 根据key获取Set中的所有值
+     *
      * @param key 键
      * @return
      */
@@ -338,6 +343,7 @@ public class RedisUtil implements ApplicationContextAware {
 
     /**
      * 根据value从一个set中查询,是否存在
+     *
      * @param key   键
      * @param value 值
      * @return true 存在 false不存在
@@ -378,7 +384,7 @@ public class RedisUtil implements ApplicationContextAware {
     public static long sSetAndTime(String groupKey, String key, long time, TimeUnit timeUnit, String... values) {
         try {
             Long count = redisTemplate.opsForSet().add(getKey(groupKey, key), values);
-            if (time > 0){
+            if (time > 0) {
                 expire(groupKey, key, time, timeUnit);
             }
             return count;
@@ -497,7 +503,7 @@ public class RedisUtil implements ApplicationContextAware {
     public static boolean lSet(String groupKey, String key, Object value, long time, TimeUnit timeUnit) {
         try {
             redisTemplate.opsForList().rightPush(getKey(groupKey, key), JSON.toJSONString(value));
-            if (time > 0){
+            if (time > 0) {
                 expire(groupKey, key, time, timeUnit);
             }
             return true;
@@ -535,7 +541,7 @@ public class RedisUtil implements ApplicationContextAware {
     public static boolean lSet(String groupKey, String key, List<String> value, long time, TimeUnit timeUnit) {
         try {
             redisTemplate.opsForList().rightPushAll(getKey(groupKey, key), value);
-            if (time > 0){
+            if (time > 0) {
                 expire(groupKey, key, time, timeUnit);
             }
             return true;

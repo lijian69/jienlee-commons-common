@@ -13,6 +13,9 @@ public class SystemException extends RuntimeException {
     private Integer code = 500;
     private String message;
 
+    public SystemException() {
+    }
+
     public SystemException(Integer code, String message) {
         super(message);
         this.code = code;

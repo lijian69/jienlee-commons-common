@@ -14,7 +14,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 @Data
 public class RestResult<T> {
 
-    private Integer code ;
+    private Integer code;
 
     private String message;
 
