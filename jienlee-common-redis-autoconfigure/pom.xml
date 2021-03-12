@@ -36,7 +36,7 @@
 
         <dependency>
             <groupId>com.github.lijian69</groupId>
-            <artifactId>jienlee-common-core</artifactId>
+            <artifactId>jienlee-common</artifactId>
             <version>1.0.0</version>
         </dependency>
 
