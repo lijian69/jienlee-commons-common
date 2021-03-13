@@ -5,7 +5,7 @@
 
     <groupId>com.github.lijian69</groupId>
     <artifactId>jienlee-commons-common</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <packaging>pom</packaging>
     <name>jienlee-commons-common</name>
     <description>公共的springboot装载类</description>
@@ -47,6 +47,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-boot.version>2.2.2.RELEASE</spring-boot.version>
         <version.rocketmq>3.6.2.Final</version.rocketmq>
+        <jienlee.version>1.1.0</jienlee.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -98,7 +99,6 @@
                 <artifactId>hutool-all</artifactId>
                 <version>5.4.0</version>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 

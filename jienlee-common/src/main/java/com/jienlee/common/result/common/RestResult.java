@@ -1,4 +1,4 @@
-package com.jienlee.common.common;
+package com.jienlee.common.result.common;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
